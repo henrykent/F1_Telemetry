@@ -1,6 +1,6 @@
 import java.io.*;
 import java.net.*;
-//import com.google.gson.JsonParser;
+
 
 public class connectionHandler {
 
@@ -17,13 +17,12 @@ public class connectionHandler {
                 DatagramPacket received = new DatagramPacket(buffer, buffer.length, address, port);
                 socket.receive(received);
 
-                String data = new String(buffer, 0, received.getLength());
-                //JsonParser jsonParser = new JsonParser();
+                //String data = new String(buffer, 0, received.getLength());
 
-                //JsonArray jsonArrayOutput = (JsonArray)jsonParser.parse(data);
-                //System.out.println("Output : " + jsonArrayOutput);
+                StringBuffer test = unpack(buffer);
+                System.out.println(test.toString());
 
-                System.out.println(data);
+                //System.out.println(data);
                 System.out.println();
 
                 Thread.sleep(1000/60);
@@ -38,5 +37,31 @@ public class connectionHandler {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public StringBuffer unpack(byte[] array) {
+
+        int len = array.length;
+        int length = len << 1;
+
+        StringBuffer buf = new StringBuffer(length);
+        buf.setLength(length);
+
+        for (int i = 0, j = 0; i < len; ++i) {
+
+            byte by = array[i];
+
+            byte hi = (byte) ((by & 0xF0) >> 4);
+            byte lo = (byte) (by & 0x0F);
+
+            buf.setCharAt(j++, (char) hexaNibble(hi));
+            buf.setCharAt(j++, (char) hexaNibble(lo));
+        }
+
+        return buf;
+    }
+
+    public byte hexaNibble(byte by) {
+        return (byte) ((by > 9) ? (by + 'a' - 10) : (by + '0'));
     }
 }
