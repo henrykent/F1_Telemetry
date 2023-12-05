@@ -18,17 +18,20 @@ public class connectionHandler {
                 DatagramPacket received = new DatagramPacket(buffer, buffer.length, address, port);
                 socket.receive(received);
 
-                byte[] lengthTwo = new byte[] {buffer[1],buffer[0]};
+                unpack testUnpack = new unpack();
+                BigInteger[] testInteger = testUnpack.unpack(buffer);
 
-                BigInteger one;
-                one = new BigInteger(lengthTwo);
-                String strResult = one.toString(2);
-                System.out.println("ByteArray to Binary = "+strResult);
+                if (testInteger != null) {
+                    System.out.print("[");
+                    for (int i = 0; i < testInteger.length; i++) {
+                        System.out.print(testInteger[i].toString(2) + ", ");
+                    }
+                    System.out.println("]");
+                } else {
+                    System.out.println("Null");
+                }
 
-                //String data = new String(buffer, 0, received.getLength());
-                //System.out.println(test.toString());
 
-                //System.out.println(data);
                 System.out.println();
 
                 Thread.sleep(1000/60);
