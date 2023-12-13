@@ -92,10 +92,12 @@ public class unpack {
         int[] toLoop = {4,4,2,2,4,1,2,2,2,2,1,2,1,2,1,4,4,4,1,1,1,1,1,1,1,1,1};
         BigInteger[] outArray = new BigInteger[27];
 
-        pointer += (53*(playerArrayPosition-1));
+        if (playerArrayPosition != 0) { //only increment to the correct spot for the pointer if player array position is not 0.
+            pointer += (53*(playerArrayPosition-1));
+        }
 
         for (int i=0; i<toLoop.length; i++) {
-            outArray[i] = readNext(inputByteArray, toLoop[i]);
+            outArray[i] = readNext(inputByteArray, toLoop[i]); //add each byte in turn into the output array.
         }
         return outArray;
     }
