@@ -5,22 +5,7 @@ public class unpack {
     private int packetType;
     private int playerArrayPosition;
     private byte[] inputByteArray;
-    private final int[][] bytesReference = {
-            {4,4,4,4,4,4,2,2,2,2,2,2,4,4,4,4,4,4},//Motion Packet (this is repeated for a total of 22 times, plus an extra (4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4)
-            {1,1,1,1,2,1,1,1,2,2,1,1,1,1,1,1,//Session Data Packet
-            //then marshal zones
-            1,1,
-            //then weather forecast samples
-            },
-            {4,4,2,2,4,1,2,2,2,2,1,2,1,2,1,4,4,4,1,1,1,1,1,1,1,1,1},//Lap Data Packet - this 22 times, that's it
-            {},//Event Packet - don't bother, as nothing useful is gained. say how you could add elements that could've used this in evaluation (i.e. a congrats message if they won / being able to show exactly when DRS is enabled, etc)
-            {},//Participants Packet - don't bother, like with event packet anaylse how you could use this and why you didn't (i.e. could display live leaderboard with names,etc)
-            {},//Car Setup Packet - don't bother, do same as with participants and event packet. (i.e. could be used to save your setups externally so they can be organised and compared easier).
-            {},//Car Telemetry Packet
-            {},//Car Status Packet
-            {},//Final Classification packet - don't bother
-            {}//Lobby info packet - don't bother
-    };
+
     public BigInteger[] unpack(byte[] arrayIn) {
         inputByteArray = arrayIn;
 
@@ -29,25 +14,28 @@ public class unpack {
 
         pointer = 22;
         playerArrayPosition = getPlayerArrayPosition();
-        System.out.println(playerArrayPosition);
 
         pointer = 24;
 
         switch (packetType) {
             case 0 -> {
-                return unpackMotion();
+                int[] toLoop = {4,4,4,4,4,4,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4};
+                return unpackLapMotionCarTelemetryCarStatus(toLoop);
             }
             case 1 -> {
                 return unpackSession();
             }
             case 2 -> {
-                return unpackLap();
+                int[] toLoop = {4,4,2,2,4,1,2,2,2,2,1,2,1,2,1,4,4,4,1,1,1,1,1,1,1,1,1};
+                return unpackLapMotionCarTelemetryCarStatus(toLoop);
             }
             case 6 -> {
-                return unpackCarTelemetry();
+                int[] toLoop = {2,4,4,4,1,1,2,1,1,2,1,1,2,4,1};
+                return unpackLapMotionCarTelemetryCarStatus(toLoop);
             }
             case 7 -> {
-                return unpackCarStatus();
+                int[] toLoop = {1,1,1,1,1,4,4,4,2,2,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,1,4,4,4};
+                return unpackLapMotionCarTelemetryCarStatus(toLoop);
             }
             default -> {
                 return null;
@@ -78,22 +66,55 @@ public class unpack {
 
         return Integer.parseInt(playerArrayPositionBinaryNumber.toString(2), 2);
     }
-    private BigInteger[] unpackMotion() {
-
-        return null;
-    }
 
     private BigInteger[] unpackSession() {
+        BigInteger[] outArray = new BigInteger[161];
+        int[] toLoop1 = {1,1,1,1,2,1,1,1,2,2,1,1,1,1,1,1}; //last item is numMarshallZones
+        int[] toLoopMarshall = {4,1};
+        int[] toLoop2 = {1,1,1}; //last item is numWeatherForecastSamples
+        int[] toLoopForecast = {1,1,1,1,1};
+        int pointer = 0;
 
-        return null;
+        for (int i=0; i<toLoop1.length; i++) { // loop up until the marshall zones arrays
+            outArray[i] = readNext(inputByteArray, toLoop1[i]);
+            pointer += 1;
+        }
+
+        int numMarshall = Integer.parseInt(outArray[pointer - 1].toString(2), 2);
+        for (int i=0; i<21; i++) { // loop through the max number of times
+            for (int j=0; j<toLoopMarshall.length; j++) {
+                if (i < numMarshall) { // if an array exists (i.e. still in range) then add it to the out array
+                    outArray[pointer] = readNext(inputByteArray, toLoopMarshall[j]);
+                    pointer += 1;
+                } else { // else just increment the counter to keep pointer in correct place
+                    pointer += 1;
+                }
+            }
+        }
+
+        for (int i=0; i<toLoop2.length; i++) { // loop up until the forecast sample arrays
+            outArray[pointer] = readNext(inputByteArray, toLoop2[i]);
+            pointer += 1;
+        }
+
+        int numForecast = Integer.parseInt(outArray[pointer - 1].toString(2), 2);
+        for (int i=0; i<20; i++) { // loop rthrough the max number of times
+            for (int j=0; j<toLoopForecast.length; j++) {
+                if (i < numForecast) { // if still in range, thus data exists, add it to the out array
+                    outArray[pointer] = readNext(inputByteArray, toLoopForecast[j]);
+                    pointer += 1;
+                } // no else as this is end of packet if not in range, so pointer is not needed to be incremented anymore
+            }
+        }
+
+        return outArray;
     }
 
-    private BigInteger[] unpackLap() {
-        int[] toLoop = {4,4,2,2,4,1,2,2,2,2,1,2,1,2,1,4,4,4,1,1,1,1,1,1,1,1,1};
-        BigInteger[] outArray = new BigInteger[27];
+    private BigInteger[] unpackLapMotionCarTelemetryCarStatus(int[] toLoop) {
+        BigInteger[] outArray = new BigInteger[toLoop.length];
 
-        if (playerArrayPosition != 0) { //only increment to the correct spot for the pointer if player array position is not 0.
-            pointer += (53*(playerArrayPosition-1));
+        if (playerArrayPosition != 0) { //only increment to the correct spot for the pointer if player array position is not 0 (as pointer will already be in correct spot).
+            pointer += (arrayTotal(toLoop)*(playerArrayPosition-1));
         }
 
         for (int i=0; i<toLoop.length; i++) {
@@ -102,13 +123,13 @@ public class unpack {
         return outArray;
     }
 
-    private BigInteger[] unpackCarTelemetry() {
+    private int arrayTotal(int[] array) {
+        int total = 0;
 
-        return null;
-    }
+        for (int i=0; i<array.length;i++) {
+            total += array[i];
+        }
 
-    private BigInteger[] unpackCarStatus() {
-
-        return null;
+        return total;
     }
 }
