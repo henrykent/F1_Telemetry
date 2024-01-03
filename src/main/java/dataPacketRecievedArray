@@ -1,0 +1,150 @@
+Motion Packet [Index / Data Point / Type / Notes]:
+0 - worldPositionX - float
+1 - worldPositionY - float
+2 - worldPositionZ - float
+3 - worldVelocityX - float
+4 - worldVelocityY - float
+5 - worldVelocityZ - float
+6 - worldForwardDirX - int16
+7 - worldForwardDirY - int16
+8 - worldForwardDirZ - int16
+9 - worldRightDirX - int16
+10 - worldRightDirY - int16
+11 - worldRightDirZ - int16
+12 - gForceLateral - float
+13 - gForceLongitudinal - float
+14 - gForceVertical - float
+15 - yaw - float - in radians
+16 - pitch - float - in radians
+17 - roll - float - in radians
+18 - suspensionPositionRL - float
+19 - suspensionPositionRR - float
+20 - suspensionPositionFL - float
+21 - suspensionPositionFR - float
+22 - suspensionVelocityRL - float
+23 - suspensionVelocityRR - float
+24 - suspensionVelocityFL - float
+25 - suspensionVelocityFR - float
+26 - suspensionAccelerationRL - float
+27 - suspensionAccelerationRR - float
+28 - suspensionAccelerationFL - float
+29 - suspensionAccelerationFR - float
+30 - wheelSpeedRL - float
+31 - wheelSpeedRR - float
+32 - wheelSpeedFL - float
+33 - wheelSpeedFR - float
+34 - wheelSlipRL - float
+35 - wheelSlipRR - float
+36 - wheelSlipFL - float
+37 - wheelSlipFR - float
+38 - localVelocityX - float
+39 - localVelocityY - float
+40 - localVelocityZ - float
+41 - angularVelocityX - float
+42 - angularVelocityY - float
+43 - angularVelocityZ - float
+44 - angularAccelerationX - float
+45 - angularAccelerationY - float
+46 - angularAccelerationZ - float
+47 - frontWheelsAngle - float - in radians
+
+Session Packet [Index / Data Point / Type / Notes]:
+48 - weather - uint8 - [0=clear, 1=light, 2=overcast, 3=light rain, 4=heavy rain, 5=storm]
+49 - trackTemperature - int8 - in degrees celsius
+50 - airTemperature - int8 - in degrees celsius
+51 - totalLaps - uint8
+52 - trackLength - uint16 - in metres
+53 - sessionType - uint8 - [0=unknown, 1-P1, 2=P2, 3=P3, 4=Short P, 5=Q1, 6=Q2, 7=Q3, 8=Short Q, 9=OSQ, 10=R, 11=R2, 12=Time Trial]
+54 - trackId - int8 - [-1=unknown, 0-21 for tracks see appendix]
+55 - formula - uint8 - [0=F1 Modern, 1=F1 Classic, 2=F2, 3=F1 Generic]
+56 - sessionTimeLeft - uint16 - in seconds
+57 - sessionDuration - uint16 - in seconds
+58 - pitSpeedLimit - uint8 - in kilometres per hour
+59 - gamePaused - uint8
+60 - isSpectating - uint8
+61 - spectatorCarIndex - uint8
+62 - sliProNativeSupport - uint8 - [0=inactive, 1=active]
+63 - numMarshalZones - uint8
+
+Marshal Zones:
+zoneStart - float
+zoneFlag - int8 - [-1=unknown, 0=none, 1=green, 2=blue, 3=yellow, 4=red]
+-repeats 21 times max
+indexes = 64-105
+
+106 - safetyCarStatus - uint8 - [0=no safety car, 1=full safety car, 2=virtual safety car, 3=formation lap safety car]
+107 - networkGame - uint8 - [0=offline, 1=online]
+108 - numWeatherForecastSamples - uint8
+
+Weather Forecast Samples:
+sessionType - uint8 - [0=unknown, 1=P1, 2=P2, 3=P3, 4=Short P, 5=Q1, 6=Q2, 7=Q3, 8=Short Q, 9=OSQ, 10=R, 11=R2, 12=Time Trial]
+timeOffset - uint8 - time in minutes the forecast is for
+weather - uint8 - [0=clear, 1=light cloud, 2=overcast, 3=light rain, 4=heavy rain, 5=storm]
+trackTemperature - int8 - in degrees celsius
+airTemperature - int8 - in degrees celsius
+-repeats 20 times max
+indexes = 109-208
+
+Lap Data [Index / Data Point / Type / Notes]:
+209 - lastLapTime - float - in seconds
+210 - currentLapTime - float - in seconds
+211 - sector1TimeInMS - uint16
+212 - sector2TimeInMS - uint16
+213 - bestLapTime - float - in seconds
+214 - bestLapNum - uint8
+215 - bestLapSector1TimeInMS - uint16
+216 - bestLapSector2TimeInMS - uint16
+217 - bestLapSector3TimeInMS - uint16
+218 - bestOverallSector1TimeInMS - uint16
+219 - bestOverallSector1LapNum - uint8
+220 - bestOverallSector2TimeInMS - uint16
+221 - bestOverallSector2LapNum - uint8
+222 - bestOverallSector3TimeInMS - uint16
+223 - bestOverallSector3LapNum - uint8
+224 - lapDistance - float - in metres
+225 - totalDistance - float - in metres
+226 - safetyCarDelta - float - in seconds
+227 - carPosition - uint8
+228 - currentLapNum - uint8
+229 - pitStatus - uint8 - [0=none, 1=pitting, 2=in pit area]
+230 - sector - uint8 - [0=sector1, 1=sector2, 2=sector3]
+231 - currentLapInvalid - uint8 - [0=valid, 1=invalid]
+232 - penalties - uint8 - accumulated time penalties in seconds
+233 - gridPosition - uint8 - started race in this position
+234 - driverStatus - uint8 - [0=in garage, 1=flying lap, 2=in lap, 3=out lap, 4=on track]
+235 - resultStatus - uint8 - [0=invalid, 1=inactive, 2=active, 3=finished, 4=disqualified, 5=not classified, 6=retired]
+
+Car Telemetry [Index / Data Point / Type / Notes]:
+236 - speed - uint16 - in kilometres per hour
+237 - throttle - float
+238 - steer - float
+239 - brake - float
+240 - clutch - uint8
+241 - gear - int8
+242 - engineRPM - uint16
+243 - drs - uint8 - [0=off, 1=on]
+244 - revLightsPercent - uint8
+245 - brakesTemperatureRL - uint16 - in celsius
+246 - brakesTemperatureRR - uint16 - in celsius
+247 - brakesTemperatureFL - uint16 - in celsius
+248 - brakesTemperatureFR - uint16 - in celsius
+249 - tyresSurfaceTemperatureRL - uint8 - in celsius
+250 - tyresSurfaceTemperatureRR - uint8 - in celsius
+251 - tyresSurfaceTemperatureFL - uint8 - in celsius
+252 - tyresSurfaceTemperatureFR - uint8 - in celsius
+253 - tyresInnerTemperatureRL - uint8 - in celsius
+254 - tyresInnerTemperatureRR - uint8 - in celsius
+255 - tyresInnerTemperatureFL - uint8 - in celsius
+256 - tyresInnerTemperatureFR - uint8 - in celsius
+257 - engineTemperature - uint16 - in celsius
+258 - tyresPressureRL - float - in PSI
+259 - tyresPressureRR - float - in PSI
+260 - tyresPressureFL - float - in PSI
+261 - tyresPressureFR - float - in PSI
+262 - surfaceTypeRL - uint8 - driving surface, see appendices
+263 - surfaceTypeRR - uint8 - driving surface, see appendices
+264 - surfaceTypeFL - uint8 - driving surface, see appendices
+265 - surfaceTypeFR - uint8 - driving surface, see appendices
+
+Car Status [Index / Data Point / Type / Notes]:
+266 -

@@ -6,7 +6,10 @@ public class unpack {
     private int playerArrayPosition;
     private byte[] inputByteArray;
 
-    public BigInteger[] unpack(byte[] arrayIn) {
+    public BigInteger[] unpack(byte[] arrayIn, BigInteger[] lastArray) {
+        if (lastArray == null) {
+            lastArray = new BigInteger[317];
+        }
         inputByteArray = arrayIn;
 
         pointer = 5;
@@ -17,30 +20,53 @@ public class unpack {
 
         pointer = 24;
 
+        BigInteger[] response;
+        int offset = 0;
+
         switch (packetType) {
             case 0 -> {
                 int[] toLoop = {4,4,4,4,4,4,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4};
-                return unpackLapMotionCarTelemetryCarStatus(toLoop);
+                response = unpackLapMotionCarTelemetryCarStatus(toLoop);
+                offset = 0;
             }
             case 1 -> {
-                return unpackSession();
+                response = unpackSession();
+                offset = 48;
             }
             case 2 -> {
                 int[] toLoop = {4,4,2,2,4,1,2,2,2,2,1,2,1,2,1,4,4,4,1,1,1,1,1,1,1,1,1};
-                return unpackLapMotionCarTelemetryCarStatus(toLoop);
+                response = unpackLapMotionCarTelemetryCarStatus(toLoop);
+                offset = 209;
             }
             case 6 -> {
-                int[] toLoop = {2,4,4,4,1,1,2,1,1,2,1,1,2,4,1};
-                return unpackLapMotionCarTelemetryCarStatus(toLoop);
+                int[] toLoop = {2,4,4,4,1,1,2,1,1,2,2,2,2,1,1,1,1,1,1,1,1,2,4,4,4,4,1,1,1,1};
+                response = unpackLapMotionCarTelemetryCarStatus(toLoop);
+                offset = 236;
             }
             case 7 -> {
                 int[] toLoop = {1,1,1,1,1,4,4,4,2,2,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,1,4,4,4};
-                return unpackLapMotionCarTelemetryCarStatus(toLoop);
+                response = unpackLapMotionCarTelemetryCarStatus(toLoop);
+                offset = 266;
             }
             default -> {
-                return null;
+                return lastArray;
             }
         }
+
+        BigInteger[] toReturn = insertIntoArray(offset, response, lastArray);
+        for (int i=0; i< toReturn.length; i++) {
+            System.out.print(toReturn[i] + ",");
+        }
+        System.out.println();
+        return toReturn;
+    }
+
+    private BigInteger[] insertIntoArray(int offset, BigInteger[] response, BigInteger[] insertInto) {
+        for (int i=0; i<response.length; i++) {
+            insertInto[offset + i] = response[i];
+        }
+
+        return insertInto;
     }
 
     private BigInteger readNext(byte[] arrayToRead, int numberOfBytesToRead) {

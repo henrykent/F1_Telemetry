@@ -6,6 +6,7 @@ import java.math.*;
 public class connectionHandler {
 
     public void createConnection(String hostname, int port) {
+        BigInteger[] testIntegerBuffer = null;
 
         try {
 
@@ -19,7 +20,8 @@ public class connectionHandler {
                 socket.receive(received);
 
                 unpack testUnpack = new unpack();
-                BigInteger[] testInteger = testUnpack.unpack(buffer);
+                BigInteger[] testInteger = testUnpack.unpack(buffer, testIntegerBuffer);
+                testIntegerBuffer = testInteger;
 
                 Thread.sleep(1000/60);
             }
