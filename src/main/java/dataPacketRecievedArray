@@ -147,4 +147,39 @@ Car Telemetry [Index / Data Point / Type / Notes]:
 265 - surfaceTypeFR - uint8 - driving surface, see appendices
 
 Car Status [Index / Data Point / Type / Notes]:
-266 -
+266 - tractionControl - uint8 - [0-2, off-high]
+267 - antiLockBrakes - uint8 = [0=off, 1=on]
+268 - fuelMix - uint8 - [0=lean, 1=standard, 2=rich, 3=max]
+269 - frontBrakeBias - uint8
+270 - pitLimiterStatus - uint8 - [0=off, 1=on]
+271 - fuelInTank - float
+272 - fuelCapacity - float
+273 - fuelRemainingLaps - float
+274 - maxRPM - uint16
+275 - idleRPM - uint16
+276 - maxGears - uint8
+277 - drsAllowed - uint8 - [0=not allowed, 1=allowed, -1=unknown]
+278 - drsActivationDistance - uint16 - [0=DRS not available, else-wise is obvious]
+279 - tyresWearRL - uint8
+280 - tyresWearRR - uint8
+281 - tyresWearFL - uint8
+282 - tyresWearFR - uint8
+283 - actualTyreCompound - uint8 - see appendices
+284 - tyreVisualCompound - uint8 - see appendices
+285 - tyresAgeLaps - uint8
+286 - tyresDamageRL - uint8
+287 - tyresDamageRR - uint8
+288 - tyresDamageFL - uint8
+289 - tyresDamageFR - uint8
+290 - frontLeftWingDamage - uint8
+291 - frontRightWingDamage - uint8
+292 - rearWingDamage - uint8
+293 - drsFault - uint8 - [0=OK, 1=Fault]
+294 - engineDamage - uint8
+295 - gearBoxDamage - uint8
+296 - vehicleFiaFlags - int8 - [-1=unknown, 0=none, 1=green]
+297 - ersStoreEnergy - float - in joules
+298 - ersDeployMode - uint8 - [0=none, 1=medium, 2=overtake, 3=hotlap]
+299 - ersHarvestedThisLapMGUK - float
+300 - ersHarvestedThisLapMGUH - float
+301 - ersDeployedThisLap - float

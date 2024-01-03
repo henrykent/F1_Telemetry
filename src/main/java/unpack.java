@@ -8,7 +8,7 @@ public class unpack {
 
     public BigInteger[] unpack(byte[] arrayIn, BigInteger[] lastArray) {
         if (lastArray == null) {
-            lastArray = new BigInteger[317];
+            lastArray = new BigInteger[301];
         }
         inputByteArray = arrayIn;
 
@@ -21,7 +21,7 @@ public class unpack {
         pointer = 24;
 
         BigInteger[] response;
-        int offset = 0;
+        int offset;
 
         switch (packetType) {
             case 0 -> {
