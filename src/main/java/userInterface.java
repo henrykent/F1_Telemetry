@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-public class liveView {
+public class userInterface extends JFrame {
     private JButton liveViewButton;
     private JButton compareViewButton;
     private JButton settingsViewButton;
@@ -41,4 +41,13 @@ public class liveView {
     private JLabel brakingDataLabel;
     private JLabel throttleTitleLabel;
     private JLabel throttleDataLabel;
+
+    public userInterface() {
+        setContentPane(main);
+        setTitle("F1 Telemetry");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(1920,1080);
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
 }
