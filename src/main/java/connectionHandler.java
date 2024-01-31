@@ -19,9 +19,10 @@ public class connectionHandler {
                 DatagramPacket received = new DatagramPacket(buffer, buffer.length, address, port);
                 socket.receive(received);
 
-                unpack testUnpack = new unpack();
-                BigInteger[] testInteger = testUnpack.unpack(buffer, testIntegerBuffer);
-                testIntegerBuffer = testInteger;
+                unpack unpacked = new unpack();
+                BigInteger[] toSend = unpacked.unpack(buffer, testIntegerBuffer);
+                Main.updateData(toSend);
+                System.out.println("toSend[236]");
 
                 Thread.sleep(1000/60);
             }

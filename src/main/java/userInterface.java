@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.math.*;
 
 public class userInterface extends JFrame {
     private JButton liveViewButton;
@@ -28,7 +29,7 @@ public class userInterface extends JFrame {
     private JPanel speed;
     private JPanel maxSpeed;
     private JLabel speedTitleLabel;
-    private JLabel speedTitleDataLabel;
+    private JLabel speedDataLabel;
     private JLabel maxSpeedTitleLabel;
     private JLabel maxSpeedDataLabel;
     private JLabel RPMTitleLabel;
@@ -41,6 +42,7 @@ public class userInterface extends JFrame {
     private JLabel brakingDataLabel;
     private JLabel throttleTitleLabel;
     private JLabel throttleDataLabel;
+    private boolean liveViewLoop = true;
 
     public userInterface() {
         setContentPane(main);
@@ -49,5 +51,24 @@ public class userInterface extends JFrame {
         setSize(1920,1080);
         setLocationRelativeTo(null);
         setVisible(true);
+        //liveViewUpdateLoop();
+    }
+
+    private void liveViewUpdateLoop() {
+        try {
+            while (liveViewLoop == true) {
+                Main test = new Main();
+                BigInteger[] data = test.getLastestLiveViewData();
+                //System.out.println(data[236]);
+                //set GUI data.
+                if (data != null) {
+                    speedDataLabel.setText(String.valueOf(data[236]));
+                }
+
+                Thread.sleep(1000/60);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

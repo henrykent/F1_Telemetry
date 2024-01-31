@@ -23,6 +23,8 @@ public class unpack {
         BigInteger[] response;
         int offset;
 
+        System.out.println("dfhfb");
+
         switch (packetType) {
             case 0 -> {
                 int[] toLoop = {4,4,4,4,4,4,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4};
