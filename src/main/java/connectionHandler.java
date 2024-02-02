@@ -6,7 +6,7 @@ import java.math.*;
 public class connectionHandler {
 
     public void createConnection(String hostname, int port) {
-        BigInteger[] testIntegerBuffer = null;
+        BigInteger[] lastRecieve = null;
 
         try {
 
@@ -20,9 +20,9 @@ public class connectionHandler {
                 socket.receive(received);
 
                 unpack unpacked = new unpack();
-                BigInteger[] toSend = unpacked.unpack(buffer, testIntegerBuffer);
+                BigInteger[] toSend = unpacked.unpack(buffer, lastRecieve);
+                lastRecieve = toSend;
                 Main.updateData(toSend);
-                System.out.println("toSend[236]");
 
                 Thread.sleep(1000/60);
             }

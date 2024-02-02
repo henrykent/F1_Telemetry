@@ -3,6 +3,8 @@ public class Main {
     private static BigInteger[] lastestLiveViewData = new BigInteger[301];
     public static void main(String[] args) {
         userInterface userInterface = new userInterface();
+        Thread thread = new Thread(userInterface);
+        thread.start();
 
         connectionHandler connection = new connectionHandler();
 

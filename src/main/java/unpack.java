@@ -23,8 +23,6 @@ public class unpack {
         BigInteger[] response;
         int offset;
 
-        System.out.println("dfhfb");
-
         switch (packetType) {
             case 0 -> {
                 int[] toLoop = {4,4,4,4,4,4,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4};
@@ -56,15 +54,15 @@ public class unpack {
         }
 
         BigInteger[] toReturn = insertIntoArray(offset, response, lastArray);
-        for (int i=0; i< toReturn.length; i++) {
-            System.out.print(toReturn[i] + ",");
-        }
-        System.out.println();
+        //for (int i=0; i< toReturn.length; i++) {
+        //    System.out.print(toReturn[i] + ",");
+        //}
+        System.out.println(toReturn[236] + "\n");
         return toReturn;
     }
 
     private BigInteger[] insertIntoArray(int offset, BigInteger[] response, BigInteger[] insertInto) {
-        for (int i=0; i<response.length; i++) {
+        for (int i=0; i<response.length-1; i++) {
             insertInto[offset + i] = response[i];
         }
 

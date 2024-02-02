@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.math.*;
-
-public class userInterface extends JFrame {
+import java.lang.*;
+public class userInterface extends JFrame implements Runnable {
     private JButton liveViewButton;
     private JButton compareViewButton;
     private JButton settingsViewButton;
@@ -51,18 +51,22 @@ public class userInterface extends JFrame {
         setSize(1920,1080);
         setLocationRelativeTo(null);
         setVisible(true);
-        //liveViewUpdateLoop();
     }
 
-    private void liveViewUpdateLoop() {
+    @Override
+    public void run() {
         try {
             while (liveViewLoop == true) {
                 Main test = new Main();
                 BigInteger[] data = test.getLastestLiveViewData();
-                //System.out.println(data[236]);
                 //set GUI data.
                 if (data != null) {
-                    speedDataLabel.setText(String.valueOf(data[236]));
+                    speedDataLabel.setText(String.valueOf(data[236]) + " km/h");
+                    RPMDataLabel.setText(String.valueOf(data[242]));
+                    lapDataLabel.setText(String.valueOf(data[228]));
+                    throttleDataLabel.setText(String.valueOf(data[237]) + "%");
+                    brakingDataLabel.setText(String.valueOf(data[239]) + "%");
+                    gearDataLabel.setText(String.valueOf(data[241]));
                 }
 
                 Thread.sleep(1000/60);
