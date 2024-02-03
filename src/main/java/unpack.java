@@ -57,7 +57,7 @@ public class unpack {
         //for (int i=0; i< toReturn.length; i++) {
         //    System.out.print(toReturn[i] + ",");
         //}
-        System.out.println(toReturn[236] + "\n");
+
         return toReturn;
     }
 

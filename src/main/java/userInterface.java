@@ -64,15 +64,31 @@ public class userInterface extends JFrame implements Runnable {
                     speedDataLabel.setText(String.valueOf(data[236]) + " km/h");
                     RPMDataLabel.setText(String.valueOf(data[242]));
                     lapDataLabel.setText(String.valueOf(data[228]));
-                    throttleDataLabel.setText(String.valueOf(data[237]) + "%");
+                    if (data[237] != null) {
+                        throttleDataLabel.setText(data[237].floatValue() + "%");
+                        //System.out.println(data[237].toString(2));
+                    }
+                    if (data[239] != null) {
+                        System.out.println(data[239].toString(2));
+                    }
                     brakingDataLabel.setText(String.valueOf(data[239]) + "%");
-                    gearDataLabel.setText(String.valueOf(data[241]));
+                    gearDataLabel.setText(gearDecode(data[241]));
                 }
 
                 Thread.sleep(1000/60);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+    }
+
+    private String gearDecode(BigInteger input) {
+        if (String.valueOf(input) == "0") {
+            return "N";
+        } else if (String.valueOf(input) == "-1") {
+            return "R";
+        } else {
+            return String.valueOf(input);
         }
     }
 }
