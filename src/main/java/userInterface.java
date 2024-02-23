@@ -69,7 +69,12 @@ public class userInterface extends JFrame implements Runnable {
                         //System.out.println(data[237].toString(2));
                     }
                     if (data[239] != null) {
-                        System.out.println(data[239].toString(2));
+                        String temp = data[239].toString(2);
+                        if (temp.length() == 30) {
+                            temp = "00" + temp;
+                        }
+                        float result = Float.intBitsToFloat(Integer.parseUnsignedInt(temp, 2));
+                        System.out.println(result);
                     }
                     brakingDataLabel.setText(String.valueOf(data[239]) + "%");
                     gearDataLabel.setText(gearDecode(data[241]));
