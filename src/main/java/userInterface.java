@@ -43,6 +43,8 @@ public class userInterface extends JFrame implements Runnable {
     private JLabel throttleTitleLabel;
     private JLabel throttleDataLabel;
     private boolean liveViewLoop = true;
+    private int maxSpeedValue = 0;
+    private float maxGForceValue = 0;
 
     public userInterface() {
         setContentPane(main);
@@ -61,23 +63,50 @@ public class userInterface extends JFrame implements Runnable {
                 BigInteger[] data = test.getLastestLiveViewData();
                 //set GUI data.
                 if (data != null) {
-                    speedDataLabel.setText(String.valueOf(data[236]) + " km/h");
-                    RPMDataLabel.setText(String.valueOf(data[242]));
-                    lapDataLabel.setText(String.valueOf(data[228]));
+                    if (data[236] != null) {
+                        speedDataLabel.setText(String.valueOf(data[236]) + " km/h");
+                        int intForm = Integer.parseInt(String.valueOf(data[236]));
+                        if (maxSpeedValue < intForm) {
+                            maxSpeedValue = intForm;
+                            maxSpeedDataLabel.setText(maxSpeedValue + " km/h");
+                        }
+                    }
+                    if (data[242] != null) {
+                        RPMDataLabel.setText(String.valueOf(data[242]));
+                    }
+                    if (data[228] != null) {
+                        lapDataLabel.setText(String.valueOf(data[228]));
+                        if (data[229] != null) {
+                            if (String.valueOf(data[229]) != "0") {
+                                pitLapDataLabel.setText(String.valueOf(data[228]));
+                            }
+                        }
+
+                    }
                     if (data[237] != null) {
-                        throttleDataLabel.setText(data[237].floatValue() + "%");
-                        //System.out.println(data[237].toString(2));
+                        String throttleString = data[237].toString(2);
+                        float throttleFloat = Float.intBitsToFloat(Integer.parseUnsignedInt(throttleString, 2));
+                        int throttleFormatted = (int) (throttleFloat * 100);
+                        throttleDataLabel.setText(throttleFormatted + "%");
                     }
                     if (data[239] != null) {
-                        String temp = data[239].toString(2);
-                        if (temp.length() == 30) {
-                            temp = "00" + temp;
-                        }
-                        float result = Float.intBitsToFloat(Integer.parseUnsignedInt(temp, 2));
-                        System.out.println(result);
+                        String brakeString = data[239].toString(2);
+                        float brakeFloat = Float.intBitsToFloat(Integer.parseUnsignedInt(brakeString, 2));
+                        int brakeFormatted = (int) (brakeFloat * 100);
+                        brakingDataLabel.setText(brakeFormatted + "%");
                     }
-                    brakingDataLabel.setText(String.valueOf(data[239]) + "%");
-                    gearDataLabel.setText(gearDecode(data[241]));
+                    if (data[241] != null) {
+                        gearDataLabel.setText(gearDecode(data[241]));
+                    }
+                    if (data[12] != null) {
+                        peakGDataCheck(12, data);
+                    }
+                    if (data[13] != null) {
+                        peakGDataCheck(13, data);
+                    }
+                    if (data[14] != null) {
+                        peakGDataCheck(14, data);
+                    }
                 }
 
                 Thread.sleep(1000/60);
@@ -85,6 +114,21 @@ public class userInterface extends JFrame implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private void peakGDataCheck(int indexNumber, BigInteger[] data) {
+        String binaryString = data[indexNumber].toString(2);
+        //if (binaryString.charAt(0) == '-') {
+        //    binaryString = binaryString.substring(1);
+        //}
+        //float GForceFloat = Float.intBitsToFloat(Integer.parseUnsignedInt(binaryString, 2));
+        System.out.println(binaryString);
+        //int forceRounding = (int) (GForceFloat * 10);
+        //float finalValue = (float) (forceRounding/10);
+        //if (maxGForceValue < finalValue) {
+        //    maxGForceValue = finalValue;
+        //    peakGDataLabel.setText(maxGForceValue + "g");
+        //}
     }
 
     private String gearDecode(BigInteger input) {
