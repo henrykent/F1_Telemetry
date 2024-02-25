@@ -118,17 +118,20 @@ public class userInterface extends JFrame implements Runnable {
 
     private void peakGDataCheck(int indexNumber, BigInteger[] data) {
         String binaryString = data[indexNumber].toString(2);
-        //if (binaryString.charAt(0) == '-') {
-        //    binaryString = binaryString.substring(1);
-        //}
-        //float GForceFloat = Float.intBitsToFloat(Integer.parseUnsignedInt(binaryString, 2));
-        System.out.println(binaryString);
-        //int forceRounding = (int) (GForceFloat * 10);
-        //float finalValue = (float) (forceRounding/10);
-        //if (maxGForceValue < finalValue) {
-        //    maxGForceValue = finalValue;
-        //    peakGDataLabel.setText(maxGForceValue + "g");
-        //}
+        if (binaryString.charAt(0) == '-') {
+            binaryString = "0" + binaryString.substring(1);
+            String new1 = binaryString.replace('0','O');
+            String new2 = new1.replace('1','0');
+            String new3 = new2.replace('O','1');
+        }
+        float GForceFloat = Float.intBitsToFloat(Integer.parseUnsignedInt(binaryString, 2));
+        System.out.println(GForceFloat);
+        int forceRounding = (int) (GForceFloat * 10);
+        float finalValue = (float) (forceRounding/10);
+        if (maxGForceValue < finalValue) {
+            maxGForceValue = finalValue;
+            peakGDataLabel.setText(maxGForceValue + "g");
+        }
     }
 
     private String gearDecode(BigInteger input) {
