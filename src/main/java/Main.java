@@ -13,7 +13,6 @@ public class Main {
 
 
 
-
     }
 
     public static void updateData(BigInteger[] data) {

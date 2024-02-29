@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.CardLayout;
 import java.math.*;
 import java.lang.*;
 public class userInterface extends JFrame implements Runnable {
@@ -42,6 +43,14 @@ public class userInterface extends JFrame implements Runnable {
     private JLabel brakingDataLabel;
     private JLabel throttleTitleLabel;
     private JLabel throttleDataLabel;
+    private JPanel cardViewRecordingWidget;
+    private JPanel startCardRecord;
+    private JPanel stopCardRecord;
+    private JPanel startExportCardRecord;
+    private JButton startButtonRecord;
+    private JButton stopButtonRecord;
+    private JButton startButton2Record;
+    private JButton exportButtonRecord;
     private boolean liveViewLoop = true;
     private int maxSpeedValue = 0;
     private float maxGForceValue = 0;
@@ -53,6 +62,9 @@ public class userInterface extends JFrame implements Runnable {
         setSize(1920,1080);
         setLocationRelativeTo(null);
         setVisible(true);
+        System.out.println("before");
+        changeSlide();
+        System.out.println("after");
     }
 
     @Override
@@ -142,5 +154,10 @@ public class userInterface extends JFrame implements Runnable {
         } else {
             return String.valueOf(input);
         }
+    }
+
+    public void changeSlide() {
+        CardLayout cl = (CardLayout)(cardViewRecordingWidget.getLayout());
+        cl.next(cardViewRecordingWidget);
     }
 }
