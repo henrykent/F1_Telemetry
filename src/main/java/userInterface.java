@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.CardLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.math.*;
 import java.lang.*;
 public class userInterface extends JFrame implements Runnable {
@@ -56,15 +58,38 @@ public class userInterface extends JFrame implements Runnable {
     private float maxGForceValue = 0;
 
     public userInterface() {
+        //setup GUI window
         setContentPane(main);
         setTitle("F1 Telemetry");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(1920,1080);
         setLocationRelativeTo(null);
         setVisible(true);
-        System.out.println("before");
-        changeSlide();
-        System.out.println("after");
+
+        //set action listeners
+        startButtonRecord.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                CardLayout recordingWidgetCardLayout = (CardLayout)(cardViewRecordingWidget.getLayout());
+                recordingWidgetCardLayout.next(cardViewRecordingWidget);
+            }
+        });
+
+        stopButtonRecord.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                CardLayout recordingWidgetCardLayout = (CardLayout)(cardViewRecordingWidget.getLayout());
+                recordingWidgetCardLayout.next(cardViewRecordingWidget);
+            }
+        });
+
+        startButton2Record.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                CardLayout recordingWidgetCardLayout = (CardLayout)(cardViewRecordingWidget.getLayout());
+                recordingWidgetCardLayout.previous(cardViewRecordingWidget);
+            }
+        });
     }
 
     @Override
@@ -154,10 +179,5 @@ public class userInterface extends JFrame implements Runnable {
         } else {
             return String.valueOf(input);
         }
-    }
-
-    public void changeSlide() {
-        CardLayout cl = (CardLayout)(cardViewRecordingWidget.getLayout());
-        cl.next(cardViewRecordingWidget);
     }
 }
