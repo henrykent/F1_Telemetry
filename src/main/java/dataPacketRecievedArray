@@ -183,3 +183,60 @@ Car Status [Index / Data Point / Type / Notes]:
 299 - ersHarvestedThisLapMGUK - float
 300 - ersHarvestedThisLapMGUH - float
 301 - ersDeployedThisLap - float
+
+Recorded Data Points:
+0 - N/A - time
+1 - 12 - gForceLateral - float
+2 - 13 - gForceLongitudinal - float
+3 - 14 - gForceVertical - float
+4 - 34 - wheelSlipRL - float
+5 - 35 - wheelSlipRR - float
+6 - 36 - wheelSlipFL - float
+7 - 37 - wheelSlipFR - float
+8 - 48 - weather - uint8 - [0=clear, 1=light, 2=overcast, 3=light rain, 4=heavy rain, 5=storm]
+9 - 49 - trackTemperature - int8 - in degrees celsius
+10 - 50 - airTemperature - int8 - in degrees celsius
+11 - 53 - sessionType - uint8 - [0=unknown, 1-P1, 2=P2, 3=P3, 4=Short P, 5=Q1, 6=Q2, 7=Q3, 8=Short Q, 9=OSQ, 10=R, 11=R2, 12=Time Trial]
+12 - 54 - trackId - int8 - [-1=unknown, 0-21 for tracks see appendix]
+13 - 55 - formula - uint8 - [0=F1 Modern, 1=F1 Classic, 2=F2, 3=F1 Generic]
+14 - 210 - currentLapTime - float - in seconds
+15 - 211 - sector1TimeInMS - uint16
+16 - 212 - sector2TimeInMS - uint16
+17 - 227 - carPosition - uint8
+18 - 228 - currentLapNum - uint8
+19 - 230 - sector - uint8 - [0=sector1, 1=sector2, 2=sector3]
+20 - 236 - speed - uint16 - in kilometres per hour
+21 - 237 - throttle - float
+22 - 238 - steer - float
+23 - 239 - brake - float
+24 - 240 - clutch - uint8
+25 - 241 - gear - int8
+26 - 242 - engineRPM - uint16
+27 - 245 - brakesTemperatureRL - uint16 - in celsius
+28 - 246 - brakesTemperatureRR - uint16 - in celsius
+29 - 247 - brakesTemperatureFL - uint16 - in celsius
+30 - 248 - brakesTemperatureFR - uint16 - in celsius
+31 - 249 - tyresSurfaceTemperatureRL - uint8 - in celsius
+32 - 250 - tyresSurfaceTemperatureRR - uint8 - in celsius
+33 - 251 - tyresSurfaceTemperatureFL - uint8 - in celsius
+34 - 252 - tyresSurfaceTemperatureFR - uint8 - in celsius
+35 - 253 - tyresInnerTemperatureRL - uint8 - in celsius
+36 - 254 - tyresInnerTemperatureRR - uint8 - in celsius
+37 - 255 - tyresInnerTemperatureFL - uint8 - in celsius
+38 - 256 - tyresInnerTemperatureFR - uint8 - in celsius
+39 - 257 - engineTemperature - uint16 - in celsius
+40 - 258 - tyresPressureRL - float - in PSI
+41 - 259 - tyresPressureRR - float - in PSI
+42 - 260 - tyresPressureFL - float - in PSI
+43 - 261 - tyresPressureFR - float - in PSI
+44 - 268 - fuelMix - uint8 - [0=lean, 1=standard, 2=rich, 3=max]
+45 - 271 - fuelInTank - float
+46 - 272 - fuelCapacity - float
+47 - 279 - tyresWearRL - uint8
+48 - 280 - tyresWearRR - uint8
+49 - 281 - tyresWearFL - uint8
+50 - 282 - tyresWearFR - uint8
+51 - 284 - tyreVisualCompound - uint8 - see appendices
+52 - 299 - ersHarvestedThisLapMGUK - float
+53 - 300 - ersHarvestedThisLapMGUH - float
+54 - 301 - ersDeployedThisLap - float

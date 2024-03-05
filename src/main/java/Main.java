@@ -2,6 +2,7 @@ import java.math.*;
 public class Main {
     private static BigInteger[] lastestLiveViewData = new BigInteger[301];
     public static void main(String[] args) {
+        fileHandler test = new fileHandler();
 
         userInterface userInterface = new userInterface();
         Thread thread = new Thread(userInterface);
