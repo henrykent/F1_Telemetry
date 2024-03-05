@@ -72,6 +72,7 @@ public class userInterface extends JFrame implements Runnable {
             public void actionPerformed(ActionEvent actionEvent) {
                 CardLayout recordingWidgetCardLayout = (CardLayout)(cardViewRecordingWidget.getLayout());
                 recordingWidgetCardLayout.next(cardViewRecordingWidget);
+                Main.startRecord();
             }
         });
 
@@ -80,6 +81,7 @@ public class userInterface extends JFrame implements Runnable {
             public void actionPerformed(ActionEvent actionEvent) {
                 CardLayout recordingWidgetCardLayout = (CardLayout)(cardViewRecordingWidget.getLayout());
                 recordingWidgetCardLayout.next(cardViewRecordingWidget);
+                Main.stopRecord();
             }
         });
 
@@ -88,6 +90,7 @@ public class userInterface extends JFrame implements Runnable {
             public void actionPerformed(ActionEvent actionEvent) {
                 CardLayout recordingWidgetCardLayout = (CardLayout)(cardViewRecordingWidget.getLayout());
                 recordingWidgetCardLayout.previous(cardViewRecordingWidget);
+                Main.startRecord();
             }
         });
     }
