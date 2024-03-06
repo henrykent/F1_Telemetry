@@ -1,6 +1,6 @@
 import java.math.*;
 public class Main {
-    private static BigInteger[] lastestLiveViewData = new BigInteger[301];
+    private static BigInteger[] lastestLiveViewData = new BigInteger[302];
     private static boolean toRecord = false;
     private static fileHandler fileHandler;
     public static void main(String[] args) {

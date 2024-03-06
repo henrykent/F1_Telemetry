@@ -8,7 +8,7 @@ public class unpack {
 
     public BigInteger[] unpack(byte[] arrayIn, BigInteger[] lastArray) {
         if (lastArray == null) {
-            lastArray = new BigInteger[301];
+            lastArray = new BigInteger[302];
         }
         inputByteArray = arrayIn;
 
@@ -62,7 +62,7 @@ public class unpack {
     }
 
     private BigInteger[] insertIntoArray(int offset, BigInteger[] response, BigInteger[] insertInto) {
-        for (int i=0; i<response.length-1; i++) {
+        for (int i=0; i<response.length; i++) {
             insertInto[offset + i] = response[i];
         }
 

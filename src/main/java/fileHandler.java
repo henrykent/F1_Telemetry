@@ -34,7 +34,7 @@ public class fileHandler {
 
     public void writeLineToFile(BigInteger[] data) {
         try {
-            FileWriter outputCSV = new FileWriter(file);
+            FileWriter outputCSV = new FileWriter(file, true);
 
             CSVWriter writer = new CSVWriter(outputCSV);
 
@@ -42,7 +42,7 @@ public class fileHandler {
             toWriteString[0] = getTime();
 
             for (int i=1; i<55; i++) {
-                BigInteger temp = data[indexes[i]];
+                BigInteger temp = data[indexes[i-1]];
                 String temp2 = String.valueOf(temp);
                 toWriteString[i] = temp2;
             }
